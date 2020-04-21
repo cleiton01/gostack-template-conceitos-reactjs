@@ -28,7 +28,12 @@ function App() {
   async function handleRemoveRepository(id) {
     
     api.delete(`/repositories/${id}`).then(response => {
-      console.log(response.data);
+      if (response.status == 400) {
+        console.log("repositorio nao existe");
+      }else{
+        const repoUpdate = projects.filter(repo => repo.id != id);
+        setProjects(repoUpdate);
+      }
     });
     
   }
